@@ -486,3 +486,100 @@ body {
     color: #fff;
     box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
 }
+
+/* ===================== RESPONSIVE ===================== */
+
+/* Botón hamburguesa - solo visible en móvil */
+.btn-hamburguesa {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 200;
+    background: rgba(99, 102, 241, 0.9);
+    border: none;
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
+    color: #fff;
+    font-size: 1.3rem;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+}
+
+/* Overlay oscuro detrás del sidebar en móvil */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 99;
+}
+
+.sidebar-overlay.activo {
+    display: block;
+}
+
+@media (max-width: 768px) {
+
+    /* Mostrar botón hamburguesa */
+    .btn-hamburguesa {
+        display: block;
+    }
+
+    /* Sidebar oculto por defecto en móvil */
+    .sidebar-custom {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 150;
+    }
+
+    /* Sidebar visible cuando tiene clase activo */
+    .sidebar-custom.activo {
+        transform: translateX(0);
+    }
+
+    /* Contenido ocupa todo el ancho */
+    .contenido-principal,
+    .contenido-principal-form {
+        margin-left: 0;
+        padding: 5rem 1.25rem 2rem;
+    }
+
+    /* Tabla con scroll horizontal */
+    .card-tabla-custom {
+        overflow-x: auto;
+    }
+
+    /* Encabezado más pequeño */
+    .encabezado-titulo {
+        font-size: 1.6rem;
+    }
+
+    /* Botón nuevo ocupa todo el ancho */
+    .btn-nuevo {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Tarjetas del panel en columna */
+    .card-panel-custom {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .encabezado-titulo {
+        font-size: 1.3rem;
+    }
+
+    .table-custom th,
+    .table-custom td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .btn-accion {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.75rem;
+    }
+}
