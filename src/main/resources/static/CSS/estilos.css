@@ -1,0 +1,488 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+ 
+* { margin: 0; padding: 0; box-sizing: border-box; }
+ 
+body {
+    background-color: #07090f;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    min-height: 100vh;
+}
+ 
+/* ===================== SIDEBAR ===================== */
+.sidebar-custom {
+    width: 260px;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(8, 47, 73, 0.95) 100%);
+    backdrop-filter: blur(15px);
+    border-right: 1px solid rgba(99, 102, 241, 0.2);
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1.5rem;
+}
+ 
+.sidebar-brand {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+ 
+.navbar-brand-text {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    background: linear-gradient(135deg, #fff 0%, #818cf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+ 
+.sidebar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    list-style: none;
+    padding: 0; margin: 0;
+}
+ 
+.sidebar-links a {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.75rem 1.2rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+ 
+.sidebar-links .active,
+.sidebar-links a:hover {
+    color: #fff;
+    background: rgba(99, 102, 241, 0.15);
+    border-color: rgba(99, 102, 241, 0.4);
+    transform: translateX(3px);
+}
+ 
+.sidebar-footer {
+    margin-top: auto;
+    width: 100%;
+}
+ 
+.btn-logout-custom {
+    width: 100%;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+ 
+.btn-logout-custom:hover {
+    background-color: #bb2d3b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+ 
+/* ===================== CONTENIDO PRINCIPAL ===================== */
+.contenido-principal {
+    flex: 1;
+    margin-left: 260px;
+    padding: 3rem 2.5rem;
+    background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.05), transparent 40%);
+}
+ 
+.encabezado-titulo {
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+ 
+.encabezado-subtitulo {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1rem;
+}
+ 
+/* ===================== BOTÓN NUEVO ===================== */
+.btn-nuevo {
+    background: #6366f1;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+ 
+.btn-nuevo:hover {
+    background: #4f46e5;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+ 
+/* ===================== TABLA ===================== */
+.card-tabla-custom {
+    background: rgba(15, 23, 42, 0.4) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+ 
+.table-custom {
+    --bs-table-bg: transparent !important;
+    --bs-table-color: rgba(255, 255, 255, 0.85) !important;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+ 
+.table-custom thead,
+.table-custom thead tr,
+.table-custom thead th {
+    background-color: rgba(10, 16, 30, 0.8) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+ 
+.table-custom th {
+    color: #a5b4fc !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    padding: 1.1rem 1.25rem;
+}
+ 
+.table-custom td {
+    padding: 1.1rem 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    background: transparent !important;
+}
+ 
+.table-custom tbody tr:hover td {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+}
+ 
+/* ===================== BOTONES DE ACCIÓN ===================== */
+.btn-accion {
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border: none;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+ 
+.btn-editar-custom {
+    background: rgba(255, 193, 7, 0.15);
+    color: #ffca28;
+}
+.btn-editar-custom:hover {
+    background: #ffc107;
+    color: #000;
+}
+ 
+.btn-eliminar-custom {
+    background: rgba(220, 53, 69, 0.15);
+    color: #ea868f;
+}
+.btn-eliminar-custom:hover {
+    background: #dc3545;
+    color: #fff;
+}
+ 
+/* ===================== FORMULARIO ===================== */
+.contenido-principal-form {
+    flex: 1;
+    margin-left: 260px;
+    padding: 3rem 2.5rem;
+    background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.05), transparent 40%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+ 
+.card-form-custom {
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+ 
+.card-header-custom {
+    background: rgba(15, 23, 42, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+}
+ 
+.card-title-custom {
+    font-size: 1.3rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+ 
+.form-label {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+ 
+.input-group-text {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.4);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+ 
+.form-control, .form-select {
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    transition: all 0.2s ease;
+}
+ 
+.input-group .form-control {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+ 
+.form-select option {
+    background-color: #1e293b;
+    color: #fff;
+}
+ 
+.form-control:focus, .form-select:focus {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: #6366f1;
+    color: #fff;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.25);
+}
+ 
+.input-group:focus-within .input-group-text {
+    border-color: #6366f1;
+    color: #6366f1;
+}
+ 
+.form-control:-webkit-autofill {
+    -webkit-text-fill-color: #fff !important;
+    -webkit-box-shadow: 0 0 0px 1000px #1e293b inset !important;
+}
+ 
+.btn-guardar {
+    background: #6366f1;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.75rem;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+    transition: all 0.2s ease;
+    width: 100%;
+}
+ 
+.btn-guardar:hover {
+    background: #4f46e5;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+ 
+.btn-cancelar {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 500;
+    padding: 0.75rem;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+}
+ 
+.btn-cancelar:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+ 
+/* ===================== PANTALLA NOTIFICACIÓN ===================== */
+.pantalla-completa {
+    position: fixed;
+    inset: 0;
+    background: rgba(7, 9, 15, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+ 
+.circulo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+ 
+.circulo-exito {
+    background: rgba(25, 135, 84, 0.2);
+    border: 1px solid #198754;
+    color: #86efac;
+    font-size: 2.5rem;
+}
+ 
+.circulo-error {
+    background: rgba(220, 53, 69, 0.2);
+    border: 1px solid #dc3545;
+    color: #fca5a5;
+    font-size: 2.5rem;
+}
+ 
+.pantalla-completa .mensaje {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+ 
+.pantalla-completa .submensaje {
+    color: rgba(255, 255, 255, 0.5);
+}
+ 
+/* ===================== INICIO - TARJETAS PANEL ===================== */
+.card-panel-custom {
+    background: rgba(30, 41, 59, 0.35);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 20px;
+    padding: 1.75rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+ 
+.card-panel-custom:hover {
+    transform: translateY(-4px);
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.4);
+}
+ 
+.panel-icon-box {
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+ 
+.icon-proveedores {
+    background: rgba(99, 102, 241, 0.15);
+    color: #818cf8;
+    border: 1px solid rgba(99, 102, 241, 0.25);
+}
+ 
+.icon-productos {
+    background: rgba(236, 72, 153, 0.15);
+    color: #f472b6;
+    border: 1px solid rgba(236, 72, 153, 0.25);
+}
+ 
+.panel-label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+ 
+.panel-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+ 
+.btn-panel-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 10px;
+    transition: all 0.2s;
+    width: 100%;
+    justify-content: center;
+}
+ 
+.btn-panel-proveedores {
+    background: rgba(99, 102, 241, 0.1);
+    color: #a5b4fc;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+}
+.btn-panel-proveedores:hover {
+    background: #6366f1;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+ 
+.btn-panel-productos {
+    background: rgba(236, 72, 153, 0.1);
+    color: #fbcfe8;
+    border: 1px solid rgba(236, 72, 153, 0.3);
+}
+.btn-panel-productos:hover {
+    background: #ec4899;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+}
