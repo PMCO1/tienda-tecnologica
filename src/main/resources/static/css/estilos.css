@@ -487,99 +487,133 @@ body {
     box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
 }
 
-/* ===================== RESPONSIVE ===================== */
-
-/* Botón hamburguesa - solo visible en móvil */
-.btn-hamburguesa {
-    display: none;
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-    z-index: 200;
-    background: rgba(99, 102, 241, 0.9);
-    border: none;
-    border-radius: 10px;
-    padding: 0.5rem 0.75rem;
-    color: #fff;
-    font-size: 1.3rem;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-}
-
-/* Overlay oscuro detrás del sidebar en móvil */
-.sidebar-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 99;
-}
-
-.sidebar-overlay.activo {
-    display: block;
-}
-
-@media (max-width: 768px) {
-
-    /* Mostrar botón hamburguesa */
-    .btn-hamburguesa {
-        display: block;
+@media (max-width: 767.98px) {
+    
+    body {
+        flex-direction: column; /* Cambia la estructura a vertical */
     }
 
-    /* Sidebar oculto por defecto en móvil */
+    /* 1. OCULTAR EL SIDEBAR DE ESCRITORIO EN MÓVILES */
     .sidebar-custom {
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-        z-index: 150;
+        display: none !important;
     }
 
-    /* Sidebar visible cuando tiene clase activo */
-    .sidebar-custom.activo {
-        transform: translateX(0);
+    /* 2. BARRA SUPERIOR FIJA MÓVIL (Donde va el botón hamburguesa) */
+    .navbar-mobil {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(15, 23, 42, 0.9);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+        padding: 1rem 1.5rem;
+        position: sticky;
+        top: 0;
+        z-index: 1050;
+        width: 100%;
     }
 
-    /* Contenido ocupa todo el ancho */
-    .contenido-principal,
+    .btn-hamburguesa {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        color: #fff;
+        padding: 0.5rem 0.75rem;
+        border-radius: 8px;
+        font-size: 1.25rem;
+        transition: all 0.2s;
+    }
+
+    .btn-hamburguesa:hover, .btn-hamburguesa:focus {
+        background: rgba(99, 102, 241, 0.15);
+        border-color: #6366f1;
+        color: #a5b4fc;
+        box-shadow: none;
+    }
+
+    /* 3. ADAPTACIÓN DEL PANEL DESPLEGABLE (OFFCANVAS DE BOOTSTRAP) */
+    .offcanvas-custom {
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.98) 0%, rgba(8, 47, 73, 0.98) 100%) !important;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-right: 1px solid rgba(99, 102, 241, 0.2) !important;
+        width: 280px !important;
+    }
+
+    .offcanvas-header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 1.5rem;
+    }
+
+    /* Forzar que la x de cerrar de Bootstrap sea blanca/estilizada */
+    .btn-close-white-custom {
+        background: transparent;
+        border: none;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 1.5rem;
+        padding: 0;
+        line-height: 1;
+        transition: color 0.2s;
+    }
+    .btn-close-white-custom:hover {
+        color: #fff;
+    }
+
+    /* Reutilizamos los mismos estilos de tus enlaces dentro del menú desplegable */
+    .offcanvas-body {
+        padding: 2rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* 4. CORRECCIÓN DE MÁRGENES DEL CONTENIDO PRINCIPAL */
+    .contenido-principal, 
     .contenido-principal-form {
-        margin-left: 0;
-        padding: 5rem 1.25rem 2rem;
+        margin-left: 0 !important;
+        padding: 2rem 1.25rem !important;
     }
 
-    /* Tabla con scroll horizontal */
-    .card-tabla-custom {
-        overflow-x: auto;
-    }
-
-    /* Encabezado más pequeño */
     .encabezado-titulo {
-        font-size: 1.6rem;
+        font-size: 1.75rem;
     }
 
-    /* Botón nuevo ocupa todo el ancho */
+    /* Ajuste para layouts flex en móviles (como títulos con botones alineados) */
+    .contenido-principal .d-flex {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 15px !important;
+    }
+    
     .btn-nuevo {
         width: 100%;
         justify-content: center;
     }
 
-    /* Tarjetas del panel en columna */
-    .card-panel-custom {
-        margin-bottom: 1rem;
+    /* 5. RESPONSIVE DE TABLAS Y FORMULARIOS */
+    .card-tabla-custom {
+        width: 100%;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .table-custom th, 
+    .table-custom td {
+        padding: 0.85rem 1rem !important;
+        white-space: nowrap;
+    }
+
+    .card-form-custom {
+        border-radius: 16px !important;
+    }
+    
+    .card-body {
+        padding: 1.25rem !important;
     }
 }
 
-@media (max-width: 480px) {
-    .encabezado-titulo {
-        font-size: 1.3rem;
-    }
-
-    .table-custom th,
-    .table-custom td {
-        padding: 0.75rem 0.5rem;
-        font-size: 0.85rem;
-    }
-
-    .btn-accion {
-        padding: 0.3rem 0.5rem;
-        font-size: 0.75rem;
+/* Ocultar la barra superior móvil si estamos en computadoras de escritorio */
+@media (min-width: 768px) {
+    .navbar-mobil {
+        display: none !important;
     }
 }
