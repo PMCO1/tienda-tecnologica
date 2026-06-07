@@ -3,27 +3,31 @@ package com.ejemplo.tienda_tecnologica.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ejemplo.tienda_tecnologica.model.Proveedor;
 import com.ejemplo.tienda_tecnologica.service.ProveedorService;
 
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/proveedores")
 public class ProveedorController {
-	
-	@Autowired
+
+    @Autowired
     private ProveedorService proveedorService;
-	
-	@GetMapping
-    public String ver(Model modelo) {
-        modelo.addAttribute("proveedores", proveedorService.listarTodos());
+
+    @GetMapping
+    public String ver(@RequestParam(required = false, defaultValue = "") String buscar, Model modelo) {
+        modelo.addAttribute("proveedores", proveedorService.buscar(buscar));
+        modelo.addAttribute("buscar", buscar);
         return "lista_proveedores";
     }
 
@@ -32,9 +36,14 @@ public class ProveedorController {
         modelo.addAttribute("proveedor", new Proveedor());
         return "form_proveedores";
     }
-    
+
     @PostMapping("/save")
-    public String save(@ModelAttribute Proveedor proveedor, RedirectAttributes flash) {
+    public String save(@Valid @ModelAttribute Proveedor proveedor,
+                       BindingResult result,
+                       RedirectAttributes flash) {
+        if (result.hasErrors()) {
+            return "form_proveedores";
+        }
         try {
             proveedorService.guardar(proveedor);
             flash.addFlashAttribute("exito", "Proveedor guardado correctamente");
@@ -43,7 +52,7 @@ public class ProveedorController {
         }
         return "redirect:/proveedores";
     }
-    
+
     @GetMapping("/edite/{id}")
     public String edite(@PathVariable Long id, Model model) {
         model.addAttribute("proveedor", proveedorService.buscarPorId(id));

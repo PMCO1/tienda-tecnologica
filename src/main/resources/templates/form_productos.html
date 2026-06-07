@@ -20,9 +20,9 @@
         </div>
         
         <ul class="sidebar-links">
-            <li><a th:href="@{/}"><i class="bi bi-house-door"></i> Inicio</a></li>
-            <li><a th:href="@{/proveedores}"><i class="bi bi-truck"></i> Proveedores</a></li>
-            <li><a th:href="@{/productos}" class="active"><i class="bi bi-box-seam"></i> Productos</a></li>
+            <li><a th:href="@{/}"><i class="bi bi-house-door"></i> <span>Inicio</span></a></li>
+            <li><a th:href="@{/proveedores}"><i class="bi bi-truck"></i> <span>Proveedores</span></a></li>
+            <li><a th:href="@{/productos}"><i class="bi bi-box-seam"></i> <span>Productos</span></a></li>
         </ul>
         
         <div class="sidebar-footer">
@@ -33,6 +33,37 @@
             </form>
         </div>
     </aside>
+    
+    <div class="navbar-mobil">
+        <a href="/" class="navbar-brand-text">Tech Spark</a>
+        <button class="btn btn-hamburguesa" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuMovilDesplegable" aria-controls="menuMovilDesplegable">
+            <i class="bi bi-list"></i>
+        </button>
+    </div>
+	
+    <div class="offcanvas offcanvas-start offcanvas-custom" tabindex="-1" id="menuMovilDesplegable" aria-labelledby="menuMovilDesplegableLabel">
+        <div class="offcanvas-header d-flex align-items-center justify-content-between">
+            <h5 class="navbar-brand-text id="menuMovilDesplegableLabel"">Tech Spark</h5>
+            <button type="button" class="btn-close-white-custom" data-bs-dismiss="offcanvas" aria-label="Close">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="sidebar-links">
+                <li><a th:href="@{/}"><i class="bi bi-house-door"></i> Inicio</a></li>
+                <li><a th:href="@{/proveedores}"><i class="bi bi-truck"></i> Proveedores</a></li>
+                <li><a th:href="@{/productos}"><i class="bi bi-box-seam"></i> Productos</a></li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn-logout-custom">
+                        <i class="bi bi-box-arrow-left"></i> Cerrar sesión
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <main class="contenido-principal-form">
         <div class="container-fluid">
@@ -47,39 +78,64 @@
                         </div>
                         <div class="card-body p-4">
                             
-                            <form th:action="@{/productos/save}" th:object="${producto}" method="post">
+                            <form th:action="@{/productos/save}" th:object="${producto}" method="post" autocomplete="off">
                             
                                 <input type="hidden" th:field="*{id}">
                                 
+                                <!-- Campo: Nombre -->
                                 <div class="mb-3">
                                     <label for="nombre" class="form-label">Nombre producto</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-tag"></i></span>
-                                        <input type="text" th:field="*{nombre}" class="form-control" id="nombre" placeholder="Ingresa el nombre del producto" required>
+                                        <input type="text" th:field="*{nombre}"
+                                               th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'"
+                                               class="form-control" id="nombre"
+                                               placeholder="Ingresa el nombre del producto"
+                                               maxlength="100">
                                     </div>
+                                    <div class="text-danger small mt-1"
+                                         th:if="${#fields.hasErrors('nombre')}"
+                                         th:errors="*{nombre}"></div>
                                 </div>
 
+                                <!-- Campo: Precio -->
                                 <div class="mb-3">
                                     <label for="precio" class="form-label">Precio</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
-                                        <input type="number" th:field="*{precio}" class="form-control field-auto-clear" id="precio" placeholder="Ej. 299.99" step="0.01" min="0" required>
+                                        <input type="number" th:field="*{precio}"
+                                               th:classappend="${#fields.hasErrors('precio')} ? 'is-invalid'"
+                                               class="form-control field-auto-clear" id="precio"
+                                               placeholder="Ej. 299.99" step="0.01" min="0.01">
                                     </div>
+                                    <div class="text-danger small mt-1"
+                                         th:if="${#fields.hasErrors('precio')}"
+                                         th:errors="*{precio}"></div>
                                 </div>
                                 
+                                <!-- Campo: Stock -->
                                 <div class="mb-3">
                                     <label for="stock" class="form-label">Stock</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-boxes"></i></span>
-                                        <input type="number" th:field="*{stock}" class="form-control field-auto-clear" id="stock" placeholder="Ej. 50" step="1" min="0" required>
+                                        <input type="number" th:field="*{stock}"
+                                               th:classappend="${#fields.hasErrors('stock')} ? 'is-invalid'"
+                                               class="form-control field-auto-clear" id="stock"
+                                               placeholder="Ej. 50" step="1" min="0">
                                     </div>
+                                    <div class="text-danger small mt-1"
+                                         th:if="${#fields.hasErrors('stock')}"
+                                         th:errors="*{stock}"></div>
                                 </div>
                                 
+                                <!-- Campo: Proveedor -->
                                 <div class="mb-4">
                                     <label for="proveedor" class="form-label">Proveedor</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-truck"></i></span>
-                                        <select th:field="*{proveedor}" id="proveedor" class="form-select" required>
+                                        <select th:field="*{proveedor}" id="proveedor"
+                                                th:classappend="${#fields.hasErrors('proveedor')} ? 'is-invalid'"
+                                                class="form-select">
                                             <option value="">-- Selecciona un proveedor --</option>
                                             <option th:each="proveedor : ${proveedores}"
                                                     th:value="${proveedor.id}"
@@ -87,8 +143,12 @@
                                             </option>
                                         </select>
                                     </div>
+                                    <div class="text-danger small mt-1"
+                                         th:if="${#fields.hasErrors('proveedor')}"
+                                         th:errors="*{proveedor}"></div>
                                 </div>
 
+                                <!-- Botones -->
                                 <div class="d-flex flex-column gap-2 mt-4">
                                     <button type="submit" class="btn-guardar">
                                         <i class="bi bi-floppy me-2"></i>Guardar
@@ -111,20 +171,16 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Seleccionamos ambos inputs numéricos mediante su nueva clase común
             const inputsNumericos = document.querySelectorAll('.field-auto-clear');
 
             inputsNumericos.forEach(input => {
-                // Al hacer clic o ganar foco en la caja de texto
                 input.addEventListener('focus', function() {
                     const valorActual = parseFloat(this.value);
-                    // Si el valor es exactamente 0 o 0.0, vaciamos el campo para escribir directo
                     if (valorActual === 0 || this.value === '0.0' || this.value === '0') {
                         this.value = '';
                     }
                 });
 
-                // Si el usuario sale del input sin escribir nada, restablecemos el 0 para evitar errores en la BD
                 input.addEventListener('blur', function() {
                     if (this.value.trim() === '') {
                         this.value = this.id === 'precio' ? '0.0' : '0';

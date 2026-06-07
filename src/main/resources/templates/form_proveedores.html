@@ -36,6 +36,37 @@
             </form>
         </div>
     </aside>
+    
+    <div class="navbar-mobil">
+        <a href="/" class="navbar-brand-text">Tech Spark</a>
+        <button class="btn btn-hamburguesa" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuMovilDesplegable" aria-controls="menuMovilDesplegable">
+            <i class="bi bi-list"></i>
+        </button>
+    </div>
+    
+    <div class="offcanvas offcanvas-start offcanvas-custom" tabindex="-1" id="menuMovilDesplegable" aria-labelledby="menuMovilDesplegableLabel">
+        <div class="offcanvas-header d-flex align-items-center justify-content-between">
+            <h5 class="navbar-brand-text id="menuMovilDesplegableLabel"">Tech Spark</h5>
+            <button type="button" class="btn-close-white-custom" data-bs-dismiss="offcanvas" aria-label="Close">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="sidebar-links">
+                <li><a th:href="@{/}"><i class="bi bi-house-door"></i> Inicio</a></li>
+                <li><a th:href="@{/proveedores}"><i class="bi bi-truck"></i> Proveedores</a></li>
+                <li><a th:href="@{/productos}"><i class="bi bi-box-seam"></i> Productos</a></li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn-logout-custom">
+                        <i class="bi bi-box-arrow-left"></i> Cerrar sesión
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- CONTENIDO PRINCIPAL -->
     <main class="contenido-principal-form">
@@ -62,8 +93,17 @@
                                     <label for="nombreEmpresa" class="form-label">Nombre Empresa</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-building"></i></span>
-                                        <input type="text" th:field="*{nombreEmpresa}" class="form-control" id="nombreEmpresa" placeholder="Ingresa el nombre de la empresa" required>
+                                        <input type="text" 
+                                               th:field="*{nombreEmpresa}"
+                                               th:classappend="${#fields.hasErrors('nombreEmpresa')} ? 'is-invalid'"
+                                               class="form-control" 
+                                               id="nombreEmpresa" 
+                                               placeholder="Ingresa el nombre de la empresa"
+                                               maxlength="100">
                                     </div>
+                                    <div class="text-danger small mt-1" 
+                                         th:if="${#fields.hasErrors('nombreEmpresa')}" 
+                                         th:errors="*{nombreEmpresa}"></div>
                                 </div>
 
                                 <!-- Campo: Contacto -->
@@ -71,8 +111,17 @@
                                     <label for="contacto" class="form-label">Contacto</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
-                                        <input type="text" th:field="*{contacto}" class="form-control" id="contacto" placeholder="Ej. Encargado de las provisiones" required>
+                                        <input type="text" 
+                                               th:field="*{contacto}"
+                                               th:classappend="${#fields.hasErrors('contacto')} ? 'is-invalid'"
+                                               class="form-control" 
+                                               id="contacto" 
+                                               placeholder="Ej. Encargado de las provisiones"
+                                               maxlength="50">
                                     </div>
+                                    <div class="text-danger small mt-1" 
+                                         th:if="${#fields.hasErrors('contacto')}" 
+                                         th:errors="*{contacto}"></div>
                                 </div>
                                 
                                 <!-- Campo: Teléfono -->
@@ -80,8 +129,19 @@
                                     <label for="telefono" class="form-label">Teléfono</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-telephone"></i></span>
-                                        <input type="text" th:field="*{telefono}" class="form-control" id="telefono" placeholder="Ej. 0000-0000" required>
+                                        <input type="tel" 
+                                               th:field="*{telefono}"
+                                               th:classappend="${#fields.hasErrors('telefono')} ? 'is-invalid'"
+                                               class="form-control" 
+                                               id="telefono" 
+                                               placeholder="Ej. 0000-0000"
+                                               maxlength="10"
+                                               pattern="^[0-9\-\+]+$"
+                                               title="Solo números, guiones o '+'">
                                     </div>
+                                    <div class="text-danger small mt-1" 
+                                         th:if="${#fields.hasErrors('telefono')}" 
+                                         th:errors="*{telefono}"></div>
                                 </div>
 
                                 <!-- Botones de Acción -->

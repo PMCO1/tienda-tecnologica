@@ -19,10 +19,10 @@
         </div>
         
         <ul class="sidebar-links">
-		    <li><a th:href="@{/}"><i class="bi bi-house-door"></i> Inicio</a></li>
-		    <li><a th:href="@{/proveedores}"><i class="bi bi-truck"></i> Proveedores</a></li>
-		    <li><a th:href="@{/productos}" class="active"><i class="bi bi-box-seam"></i> Productos</a></li>
-		</ul>
+            <li><a th:href="@{/}"><i class="bi bi-house-door"></i> <span>Inicio</span></a></li>
+            <li><a th:href="@{/proveedores}"><i class="bi bi-truck"></i> <span>Proveedores</span></a></li>
+            <li><a th:href="@{/productos}" class="active"><i class="bi bi-box-seam"></i> <span>Productos</span></a></li>
+        </ul>
         
         <div class="sidebar-footer">
             <form th:action="@{/logout}" method="post">
@@ -32,25 +32,70 @@
             </form>
         </div>
     </aside>
+    
+    <div class="navbar-mobil">
+        <a href="/" class="navbar-brand-text">Tech Spark</a>
+        <button class="btn btn-hamburguesa" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuMovilDesplegable" aria-controls="menuMovilDesplegable">
+            <i class="bi bi-list"></i>
+        </button>
+    </div>
+	
+    <div class="offcanvas offcanvas-start offcanvas-custom" tabindex="-1" id="menuMovilDesplegable" aria-labelledby="menuMovilDesplegableLabel">
+        <div class="offcanvas-header d-flex align-items-center justify-content-between">
+            <h5 class="navbar-brand-text" id="menuMovilDesplegableLabel">Tech Spark</h5>
+            <button type="button" class="btn-close-white-custom" data-bs-dismiss="offcanvas" aria-label="Close">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="sidebar-links">
+                <li><a th:href="@{/}"><i class="bi bi-house-door"></i> Inicio</a></li>
+                <li><a th:href="@{/proveedores}"><i class="bi bi-truck"></i> Proveedores</a></li>
+                <li><a th:href="@{/productos}" class="active"><i class="bi bi-box-seam"></i> Productos</a></li>
+            </ul>
+	        
+            <div class="sidebar-footer">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn-logout-custom">
+                        <i class="bi bi-box-arrow-left"></i> Cerrar sesión
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <main class="contenido-principal">
         <div class="container-fluid">
             
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
+            <div class="d-flex justify-content-between align-items-center mb-4 encabezado-contenedor">
                 <div>
                     <h2 class="encabezado-titulo mb-1">Productos</h2>
                     <p class="encabezado-subtitulo mb-0">Sistema de Gestión de Productos</p>
                 </div>
                 <div>
-                    <a th:href="@{/productos/new_producto}" class="btn btn-nuevo">
-                        <i class="bi bi-plus-lg me-1"></i> Nuevo producto
+                    <a th:href="@{/productos/new_producto}" class="btn-nuevo">
+                        <i class="bi bi-plus-lg"></i> Nuevo producto
                     </a>
                 </div>
             </div>
 
+            <!-- BUSCADOR -->
+            <form th:action="@{/productos}" method="get" class="mb-4">
+                <div class="input-group" style="max-width: 380px;">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input type="text" name="buscar" th:value="${buscar}"
+                           class="form-control" placeholder="Buscar producto por nombre..."
+                           autocomplete="off">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                    <a th:href="@{/productos}" class="btn btn-secondary" th:if="${buscar != null and !buscar.isEmpty()}">
+                        <i class="bi bi-x-lg"></i>
+                    </a>
+                </div>
+            </form>
+
             <div class="card card-tabla-custom">
                 <div class="table-responsive">
-                    <table class="table table-custom table-hover">
+                    <table class="table table-custom table-hover m-0">
                         <thead>
                             <tr>
                                 <th style="width: 80px;">ID</th>
@@ -69,7 +114,7 @@
                                 <td class="text-telefono-custom" th:text="${producto.stock}"></td>
                                 <td class="text-telefono-custom" th:text="${producto.proveedor.nombreEmpresa}"></td>
                                 <td class="text-center">
-                                    <div class="d-flex justify-content-center gap-2">
+                                    <div class="d-flex justify-content-center gap-2 accion-botones-layout">
                                         <a th:href="@{/productos/edite/{id}(id=${producto.id})}" class="btn-accion btn-editar-custom">
                                             <i class="bi bi-pencil-square"></i> Editar
                                         </a>
@@ -81,7 +126,14 @@
                                 </td>
                             </tr>
                             <tr th:if="${#lists.isEmpty(productos)}">
-                                <td colspan="5" class="text-center text-muted py-4">No hay proveedores registrados actualmente.</td>
+                                <td colspan="6" class="text-center text-muted py-4">
+                                    <span th:if="${buscar != null and !buscar.isEmpty()}">
+                                        No se encontraron productos con el nombre "<span th:text="${buscar}"></span>".
+                                    </span>
+                                    <span th:if="${buscar == null or buscar.isEmpty()}">
+                                        No hay productos registrados actualmente.
+                                    </span>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
