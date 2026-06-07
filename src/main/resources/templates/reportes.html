@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tech Spark - Reportes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+    <aside class="sidebar-custom">
+        <div class="sidebar-brand">
+            <a href="/" class="navbar-brand-text">Tech Spark</a>
+        </div>
+        <ul class="sidebar-links">
+            <li><a th:href="@{/}"><i class="bi bi-house-door"></i> Inicio</a></li>
+            <li><a th:href="@{/proveedores}"><i class="bi bi-truck"></i> Proveedores</a></li>
+            <li><a th:href="@{/productos}"><i class="bi bi-box-seam"></i> Productos</a></li>
+            <li><a th:href="@{/productos/reportes}" class="active"><i class="bi bi-bar-chart-line"></i> Reportes</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn-logout-custom">
+                    <i class="bi bi-box-arrow-left"></i> Cerrar sesión
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    <div class="navbar-mobil">
+        <a href="/" class="navbar-brand-text">Tech Spark</a>
+        <button class="btn btn-hamburguesa" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuMovilDesplegable" aria-controls="menuMovilDesplegable">
+            <i class="bi bi-list"></i>
+        </button>
+    </div>
+
+    <div class="offcanvas offcanvas-start offcanvas-custom" tabindex="-1" id="menuMovilDesplegable" aria-labelledby="menuMovilDesplegableLabel">
+        <div class="offcanvas-header d-flex align-items-center justify-content-between">
+            <h5 class="navbar-brand-text" id="menuMovilDesplegableLabel">Tech Spark</h5>
+            <button type="button" class="btn-close-white-custom" data-bs-dismiss="offcanvas" aria-label="Close">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="sidebar-links">
+                <li><a th:href="@{/}"><i class="bi bi-house-door"></i> Inicio</a></li>
+                <li><a th:href="@{/proveedores}"><i class="bi bi-truck"></i> Proveedores</a></li>
+                <li><a th:href="@{/productos}"><i class="bi bi-box-seam"></i> Productos</a></li>
+                <li><a th:href="@{/productos/reportes}"><i class="bi bi-bar-chart-line"></i> Reportes</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn-logout-custom">
+                        <i class="bi bi-box-arrow-left"></i> Cerrar sesión
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <main class="contenido-principal">
+        <div class="container-fluid">
+
+            <div class="mb-4">
+                <h2 class="encabezado-titulo mb-2">Reportes</h2>
+                <p class="encabezado-subtitulo mb-0">Análisis visual del stock por proveedor.</p>
+            </div>
+
+            <!-- FILTRO POR PROVEEDOR -->
+            <form th:action="@{/productos/reportes}" method="get" class="mb-4">
+                <div class="input-group" style="max-width: 420px;">
+                    <span class="input-group-text"><i class="bi bi-truck"></i></span>
+                    <select name="proveedorId" class="form-select">
+                        <option value="">-- Todos los proveedores --</option>
+                        <option th:each="prov : ${proveedores}"
+                                th:value="${prov.id}"
+                                th:text="${prov.nombreEmpresa}"
+                                th:selected="${prov.id == proveedorSeleccionado}">
+                        </option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-funnel"></i> Filtrar
+                    </button>
+                    <a th:href="@{/productos/reportes}" class="btn btn-secondary"
+                       th:if="${proveedorSeleccionado != null}">
+                        <i class="bi bi-x-lg"></i>
+                    </a>
+                </div>
+            </form>
+
+            <div class="row g-4">
+
+                <!-- GRÁFICA DE BARRAS -->
+                <div class="col-12 col-xl-7">
+                    <div class="card card-tabla-custom p-4">
+                        <h5 class="text-white mb-4"><i class="bi bi-bar-chart-fill me-2 text-primary"></i>Stock por Proveedor</h5>
+                        <canvas id="graficaBarras" height="120"></canvas>
+                    </div>
+                </div>
+
+                <!-- GRÁFICA DE DONA -->
+                <div class="col-12 col-xl-5">
+                    <div class="card card-tabla-custom p-4">
+                        <h5 class="text-white mb-4"><i class="bi bi-pie-chart-fill me-2 text-info"></i>Distribución de Stock</h5>
+                        <canvas id="graficaDona" height="120"></canvas>
+                    </div>
+                </div>
+
+                <!-- TABLA RESUMEN STOCK -->
+                <div class="col-12">
+                    <div class="card card-tabla-custom">
+                        <div class="table-responsive">
+                            <table class="table table-custom table-hover m-0">
+                                <thead>
+                                    <tr>
+                                        <th>Proveedor</th>
+                                        <th>Stock Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="dato : ${stockPorProveedor}">
+                                        <td class="fw-semibold text-white" th:text="${dato.proveedor}"></td>
+                                        <td class="text-contacto-custom" th:text="${dato.stock}"></td>
+                                    </tr>
+                                    <tr th:if="${#lists.isEmpty(stockPorProveedor)}">
+                                        <td colspan="2" class="text-center text-muted py-4">No hay datos disponibles.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABLA DE PRODUCTOS FILTRADOS (solo si hay proveedor seleccionado) -->
+                <div class="col-12" th:if="${proveedorSeleccionado != null and productosFiltrados != null}">
+                    <div class="card card-tabla-custom">
+                        <div class="p-3 border-bottom" style="border-color: rgba(255,255,255,0.08) !important;">
+                            <h5 class="text-white mb-0">
+                                <i class="bi bi-box-seam me-2 text-warning"></i>Productos del proveedor
+                            </h5>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-custom table-hover m-0">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre</th>
+                                        <th>Precio</th>
+                                        <th>Stock</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="prod : ${productosFiltrados}">
+                                        <td class="fw-bold text-white-50" th:text="${prod.id}"></td>
+                                        <td class="fw-semibold text-white" th:text="${prod.nombre}"></td>
+                                        <td class="text-contacto-custom" th:text="${prod.precio}"></td>
+                                        <td class="text-telefono-custom" th:text="${prod.stock}"></td>
+                                    </tr>
+                                    <tr th:if="${#lists.isEmpty(productosFiltrados)}">
+                                        <td colspan="4" class="text-center text-muted py-4">Este proveedor no tiene productos registrados.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <div id="stockData" th:data-json="${stockJson}" style="display:none;"></div>
+
+    <script>
+        const rawJson = document.getElementById('stockData').getAttribute('data-json');
+        const datos = JSON.parse(rawJson);
+        const labels = datos.map(d => d.proveedor);
+        const valores = datos.map(d => d.stock);
+
+        const colores = [
+            'rgba(99, 102, 241, 0.8)',
+            'rgba(236, 72, 153, 0.8)',
+            'rgba(20, 184, 166, 0.8)',
+            'rgba(251, 191, 36, 0.8)',
+            'rgba(239, 68, 68, 0.8)',
+            'rgba(34, 197, 94, 0.8)',
+            'rgba(168, 85, 247, 0.8)',
+            'rgba(59, 130, 246, 0.8)'
+        ];
+
+        const bordes = colores.map(c => c.replace('0.8', '1'));
+
+        new Chart(document.getElementById('graficaBarras'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Stock total',
+                    data: valores,
+                    backgroundColor: colores,
+                    borderColor: bordes,
+                    borderWidth: 1,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: {
+                        ticks: { color: 'rgba(255,255,255,0.7)' },
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    y: {
+                        ticks: { color: 'rgba(255,255,255,0.7)' },
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('graficaDona'), {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: valores,
+                    backgroundColor: colores,
+                    borderColor: bordes,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: 'rgba(255,255,255,0.7)',
+                            padding: 15,
+                            font: { size: 12 }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

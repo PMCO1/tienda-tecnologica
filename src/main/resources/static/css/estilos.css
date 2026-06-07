@@ -489,6 +489,23 @@ body {
     box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
 }
 
+.icon-reportes {
+    background: rgba(20, 184, 166, 0.15);
+    color: #2dd4bf;
+    border: 1px solid rgba(20, 184, 166, 0.25);
+}
+
+.btn-panel-reportes {
+    background: rgba(20, 184, 166, 0.1);
+    color: #99f6e4;
+    border: 1px solid rgba(20, 184, 166, 0.3);
+}
+.btn-panel-reportes:hover {
+    background: #14b8a6;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
+}
+
 /* ==========================================================================
    MEDIA QUERY PARA MENÚ HAMBURGUESA DESPLEGABLE (< 768px)
    ========================================================================== */
