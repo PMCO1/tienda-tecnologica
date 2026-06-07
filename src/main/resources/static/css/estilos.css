@@ -312,46 +312,48 @@ body {
 .btn-guardar {
     background: #6366f1;
     color: #fff;
-    font-weight: 600;
-    padding: 0.75rem;
-    border-radius: 10px;
     border: none;
-    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+    padding: 0.85rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
     transition: all 0.2s ease;
-    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
- 
+
 .btn-guardar:hover {
     background: #4f46e5;
-    color: #fff;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
 }
- 
+
 .btn-cancelar {
     background: rgba(255, 255, 255, 0.05);
     color: rgba(255, 255, 255, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.85rem;
+    border-radius: 12px;
     font-weight: 500;
-    padding: 0.75rem;
-    border-radius: 10px;
+    font-size: 1rem;
     transition: all 0.2s ease;
-    display: block;
-    text-align: center;
-    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
- 
+
 .btn-cancelar:hover {
     background: rgba(255, 255, 255, 0.1);
     color: #fff;
-    border-color: rgba(255, 255, 255, 0.2);
 }
- 
-/* ===================== PANTALLA NOTIFICACIÓN ===================== */
+
+/* ===================== PANTALLA COMPLETA ===================== */
 .pantalla-completa {
     position: fixed;
     inset: 0;
-    background: rgba(7, 9, 15, 0.95);
+    background: rgba(7, 9, 15, 0.92);
     backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
@@ -488,12 +490,12 @@ body {
 }
 
 /* ==========================================================================
-   NUEVA MEDIA QUERY PARA MENÚ HAMBURGUESA DESPLEGABLE (< 768px)
+   MEDIA QUERY PARA MENÚ HAMBURGUESA DESPLEGABLE (< 768px)
    ========================================================================== */
 @media (max-width: 767.98px) {
     
     body {
-        flex-direction: column; /* Cambia la estructura a vertical */
+        flex-direction: column;
     }
 
     /* 1. OCULTAR EL SIDEBAR DE ESCRITORIO EN MÓVILES */
@@ -501,7 +503,7 @@ body {
         display: none !important;
     }
 
-    /* 2. BARRA SUPERIOR FIJA MÓVIL (Donde va el botón hamburguesa) */
+    /* 2. BARRA SUPERIOR FIJA MÓVIL */
     .navbar-mobil {
         display: flex !important;
         align-items: center;
@@ -534,7 +536,7 @@ body {
         box-shadow: none;
     }
 
-    /* 3. ADAPTACIÓN DEL PANEL DESPLEGABLE (OFFCANVAS DE BOOTSTRAP) */
+    /* 3. PANEL DESPLEGABLE (OFFCANVAS) */
     .offcanvas-custom {
         background: linear-gradient(180deg, rgba(15, 23, 42, 0.98) 0%, rgba(8, 47, 73, 0.98) 100%) !important;
         backdrop-filter: blur(20px);
@@ -548,7 +550,6 @@ body {
         padding: 1.5rem;
     }
 
-    /* Forzar que la x de cerrar de Bootstrap sea blanca/estilizada */
     .btn-close-white-custom {
         background: transparent;
         border: none;
@@ -562,65 +563,31 @@ body {
         color: #fff;
     }
 
-    /* Reutilizamos los mismos estilos de tus enlaces dentro del menú desplegable */
     .offcanvas-body {
         padding: 2rem 1.5rem;
         display: flex;
         flex-direction: column;
     }
 
-    /* 4. CORRECCIÓN DE MÁRGENES DEL CONTENIDO PRINCIPAL */
-    .contenido-principal, 
+    /* 4. MÁRGENES DEL CONTENIDO PRINCIPAL */
+    .contenido-principal,
     .contenido-principal-form {
         margin-left: 0 !important;
-        padding: 2rem 1.25rem !important;
+        padding: 1.5rem 1rem !important;
+        width: 100% !important;
     }
 
     .encabezado-titulo {
         font-size: 1.75rem;
     }
 
-    /* Ajuste para layouts flex en móviles (como títulos con botones alineados) */
     .contenido-principal .d-flex {
         flex-direction: column !important;
         align-items: flex-start !important;
         gap: 15px !important;
     }
-    
-    .btn-nuevo {
-        width: 100%;
-        justify-content: center;
-    }
 
-    /* 5. RESPONSIVE DE TABLAS Y FORMULARIOS */
-    .card-tabla-custom {
-        width: 100%;
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    .table-custom th, 
-    .table-custom td {
-        padding: 0.85rem 1rem !important;
-        white-space: nowrap;
-    }
-
-    .card-form-custom {
-        border-radius: 16px !important;
-    }
-    
-    .card-body {
-        padding: 1.25rem !important;
-    }
-    
-    /* Forzar que el contenedor de la tabla pierda el margen de 260px de la PC */
-    .contenido-principal {
-        margin-left: 0 !important;
-        padding: 1.5rem 1rem !important;
-        width: 100% !important;
-    }
-
-    /* Hace que el título y el botón "+ Nuevo" se apilen ordenadamente en vertical */
+    /* 5. ENCABEZADO CON BOTÓN NUEVO */
     .encabezado-contenedor {
         flex-direction: column !important;
         align-items: stretch !important;
@@ -632,21 +599,35 @@ body {
         justify-content: center;
     }
 
-    /* Evita que los botones de "Editar" y "Eliminar" se apilen feo dentro de la celda */
-    .accion-botones-layout {
-        flex-direction: row !important; 
-        gap: 0.5rem !important;
+    /* 6. TABLAS Y FORMULARIOS */
+    .card-tabla-custom {
+        width: 100%;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
     }
 
-    /* Mantiene las celdas limpias y legibles en scroll horizontal */
-    .table-custom th, .table-custom td {
+    .table-custom th,
+    .table-custom td {
         padding: 0.75rem 1rem !important;
-        white-space: nowrap !important; /* Evita textos cortados en varias líneas */
+        white-space: nowrap !important;
+    }
+
+    .card-form-custom {
+        border-radius: 16px !important;
+    }
+
+    .card-body {
+        padding: 1.25rem !important;
+    }
+
+    /* 7. BOTONES DE ACCIÓN EN TABLA */
+    .accion-botones-layout {
+        flex-direction: row !important;
+        gap: 0.5rem !important;
     }
 }
 
-
-/* Ocultar la barra superior móvil si estamos en computadoras de escritorio */
+/* Ocultar la barra superior móvil en escritorio */
 @media (min-width: 768px) {
     .navbar-mobil {
         display: none !important;
